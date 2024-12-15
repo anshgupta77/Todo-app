@@ -21,11 +21,11 @@ const InputTodo = ({todoList, setTodoList}) => {
         }
     }
     return ( 
-        <div className="flex items-center gap-4 mb-6 " >
-            <p className="text-lg font-medium text-gray-700">What needs to be done</p>
+        <div className="flex items-center justify-between mb-6 " >
+            <p className="text-2xl font-medium text-gray-700">What needs to be done?</p>
             
             <input 
-            className="w-1/2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-1/2 p-2 border border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text" 
             onChange={(e) => setTask(e.target.value)}
             value={task}

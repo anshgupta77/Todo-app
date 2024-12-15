@@ -1,8 +1,16 @@
-const VeiwTodo = ({ setTodoList,todoList}) => {
+
+const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
+
     function deleteTask(id){
         const filterTodoList = todoList.filter(task => task.id!==id);
         setTodoList(filterTodoList);
     }
+    function handleColor(e){
+        const currentColor = e.target.value;
+        setColor(currentColor);
+    }
+
+
     return ( 
         <div className="space-y-4 overflow-y-auto min-h-[30vh] mb-[80px]">
         {todoList.map((element) => (
@@ -11,11 +19,14 @@ const VeiwTodo = ({ setTodoList,todoList}) => {
             className="flex items-center justify-between "
             >
             <div className="flex items-center gap-2">
-                <div className="w-6 h-6 border border-gray-400 rounded-full"></div>
+                <div className="w-6 h-6 border border-gray-400 rounded-full bg-white"></div>
                 <span className="text-lg font-medium text-gray-700">{element.task}</span>
             </div>
             <div className="flex items-center gap-4">
-                <select className="border border-gray-300 rounded-md px-2 py-1font-bold">
+                <select 
+                value={color}
+                className={`border border-gray-300 outline-none rounded-md px-2 py-1 font-bold text-${color}-600`}
+                onChange={handleColor}>
                 <option value="purple" className="text-purple-600 font-extrabold">Purple</option>
                 <option value="blue" className="text-blue-600 font-extrabold">Blue</option>
                 <option value="red" className="text-red-600 font-extrabold">Red</option>
