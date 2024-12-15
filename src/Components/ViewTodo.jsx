@@ -1,22 +1,22 @@
 import { useState } from "react";
 import tick from "./../service/tick correct.png"
-const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
-    const [isChecked, setIsChecked] = useState(false);
+const VeiwTodo = ({ setTodoList,todoList}) => {
+    console.log("Todo List :" , todoList)
     function deleteTask(id){
         const filterTodoList = todoList.filter(task => task.id!==id);
         setTodoList(filterTodoList);
     }
-    function handleColor(e){
+    function handleColor(e, id){
         const currentColor = e.target.value;
-        // element.color = currentColor;
-        // const ind = todoList.findindex(ele => element === ele);
-        // const updatedTodoList = [...todoList];
-        // updatedTodoList[ind] = element;
-        // setTodoList(updatedTodoList);
-        setColor(currentColor);
+        console.log(currentColor);
+        const updatedTodoList = todoList.map(element =>
+            element.id === id? {...element,color: currentColor}:element
+        );
+        setTodoList(updatedTodoList);
     }
-    function handleIsChecked(){
-        setIsChecked(prev => !prev);
+    function handleIsChecked(status, id){
+        const updatedTodoList = todoList.map(element => element.id === id? element.status === "Active" ? {...element, status: "Completed"} : {...element, status: "Active"} : element);
+        setTodoList(updatedTodoList);
     }
 
     return ( 
@@ -27,17 +27,17 @@ const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
             className="flex items-center justify-between "
             >
             <div className="flex items-center gap-2">
-                {isChecked ? <img src={tick} className="w-6 h-6 object-cover" 
-                onClick={handleIsChecked} />:<div className="w-6 h-6 border border-gray-400 rounded-full bg-white"
-                onClick={handleIsChecked}></div>}
+                {element.status === "Completed" ? <img src={tick} className="w-6 h-6 object-cover" 
+                onClick={() =>handleIsChecked(element.status, element.id)} />:<div className="w-6 h-6 border border-gray-400 rounded-full bg-white"
+                onClick={() =>handleIsChecked(element.status, element.id)}></div>}
                 
                 <span className="text-lg font-medium text-gray-700">{element.task}</span>
             </div>
             <div className="flex items-center gap-4">
                 <select 
-                value={color}
-                className={`border border-gray-300 outline-none rounded-md px-2 py-1 font-bold text-${color}-600`}
-                onChange={handleColor}>
+                value={element.color}
+                className={`border border-gray-300 outline-none rounded-md px-2 py-1 font-bold text-${element.color}-600`}
+                onChange={(e) =>handleColor(e,element.id)}>
                 <option value="purple" className="text-purple-600 font-extrabold">Purple</option>
                 <option value="blue" className="text-blue-600 font-extrabold">Blue</option>
                 <option value="red" className="text-red-600 font-extrabold">Red</option>
@@ -45,7 +45,7 @@ const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
                 </select>
                 <button
                 className="text-red-500 font-extrabold hover:text-red-700"
-                onClick={() => deleteTask(element.id)}
+                onClick={(e) => deleteTask(element.id)}
                 >
                 X
                 </button>
