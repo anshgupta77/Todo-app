@@ -12,7 +12,7 @@ const InputTodo = ({todoList, setTodoList}) => {
     const [task, setTask] = useState("");
     function handleTodoList(e){
         if(e.key === "Enter"){
-            const taskObject = {task, id: generateId(todoList)};
+            const taskObject = {task, id: generateId(todoList), status: "Active", color: "purple"};
             const updatedTodoList = [...todoList];
             updatedTodoList.push(taskObject);
             console.log(updatedTodoList);

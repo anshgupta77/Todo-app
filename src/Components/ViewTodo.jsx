@@ -1,15 +1,23 @@
-
+import { useState } from "react";
+import tick from "./../service/tick correct.png"
 const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
-
+    const [isChecked, setIsChecked] = useState(false);
     function deleteTask(id){
         const filterTodoList = todoList.filter(task => task.id!==id);
         setTodoList(filterTodoList);
     }
     function handleColor(e){
         const currentColor = e.target.value;
+        // element.color = currentColor;
+        // const ind = todoList.findindex(ele => element === ele);
+        // const updatedTodoList = [...todoList];
+        // updatedTodoList[ind] = element;
+        // setTodoList(updatedTodoList);
         setColor(currentColor);
     }
-
+    function handleIsChecked(){
+        setIsChecked(prev => !prev);
+    }
 
     return ( 
         <div className="space-y-4 overflow-y-auto min-h-[30vh] mb-[80px]">
@@ -19,7 +27,10 @@ const VeiwTodo = ({ setTodoList,todoList, setColor, color}) => {
             className="flex items-center justify-between "
             >
             <div className="flex items-center gap-2">
-                <div className="w-6 h-6 border border-gray-400 rounded-full bg-white"></div>
+                {isChecked ? <img src={tick} className="w-6 h-6 object-cover" 
+                onClick={handleIsChecked} />:<div className="w-6 h-6 border border-gray-400 rounded-full bg-white"
+                onClick={handleIsChecked}></div>}
+                
                 <span className="text-lg font-medium text-gray-700">{element.task}</span>
             </div>
             <div className="flex items-center gap-4">
