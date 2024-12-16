@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { addTask } from "../slices/TodoListSlice";
+import { useDispatch, useSelector } from "react-redux";
 function generateId(todoList){
     const result = todoList.reduce((acc, ele) =>{
         if(ele.id === undefined) return acc;
@@ -9,15 +11,14 @@ function generateId(todoList){
 }
 const InputTodo = ({todoList, setTodoList}) => {
 
-    const [task, setTask] = useState("");
+    const [task, setTask] = useState({
+        todo: "",
+    });
+    const dispatch = useDispatch();
     function handleTodoList(e){
         if(e.key === "Enter"){
-            const taskObject = {task, id: generateId(todoList), status: "Active", color: "purple"};
-            const updatedTodoList = [...todoList];
-            updatedTodoList.push(taskObject);
-            console.log(updatedTodoList);
-            setTodoList(updatedTodoList);
-            setTask("");
+            dispatch(addTask({task}));
+            setTask({todo: ""});
         }
     }
     return ( 
@@ -27,8 +28,11 @@ const InputTodo = ({todoList, setTodoList}) => {
             <input 
             className="w-1/2 p-2 border border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text" 
-            onChange={(e) => setTask(e.target.value)}
-            value={task}
+            onChange={(e) => {
+                const todo = e.target.value;
+                setTask({todo})}
+            }
+            value={task.todo}
             onKeyDown={handleTodoList}/>
             {/* <button className="py-4 px-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" onClick={handleTodoList} >Add a new task</button> */}
         </div>

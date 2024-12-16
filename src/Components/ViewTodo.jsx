@@ -1,31 +1,27 @@
-import { useState } from "react";
-import tick from "./../service/tick correct.png"
+
 import TodoList from "./TodoList";
+import { useDispatch } from "react-redux";
+import { updateColor, updateStatus, deleteTask } from "../slices/TodoListSlice";
 const VeiwTodo = ({ setTodoList,todoList}) => {
     console.log("Todo List :" , todoList)
-    function deleteTask(id){
-        const filterTodoList = todoList.filter(task => task.id!==id);
-        setTodoList(filterTodoList);
+    const dispatch = useDispatch();
+    function handleDelete(id){
+        dispatch(deleteTask({id}));
     }
     function handleColor(e, id){
-        const currentColor = e.target.value;
-        console.log(currentColor);
-        const updatedTodoList = todoList.map(element =>
-            element.id === id? {...element,color: currentColor}:element
-        );
-        setTodoList(updatedTodoList);
+        const newColor = e.target.value;
+        console.log(newColor);
+        dispatch(updateColor({id, newColor}))
     }
-    function handleIsChecked(status, id){
-        const updatedTodoList = todoList.map(element => element.id === id? element.status === "Active" ? {...element, status: "Completed"} : {...element, status: "Active"} : element);
-        setTodoList(updatedTodoList);
+    function handleIsChecked(id){
+       dispatch(updateStatus({id}));
     }
-
     return ( 
         <TodoList 
         todoList={todoList}
         handleIsChecked={handleIsChecked}
         handleColor={handleColor}
-        deleteTask={deleteTask}></TodoList>
+        handleDelete={handleDelete}></TodoList>
      );
 }
  

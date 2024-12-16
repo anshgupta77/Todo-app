@@ -1,15 +1,16 @@
-const ActionTodo = ({todoList, setTodoList}) => {
-    const remainingTodoList  = todoList.reduce((acc,ele) =>{
-      if(ele.status === "Active") return acc+1;
-      return acc;
-    }, 0)
+import { useDispatch, useSelector } from "react-redux";
+import { markedAllComplete, clearAllCompletedTask } from "../slices/TodoListSlice";
+import { remainingTask } from "../slices/TodoListSlice";
+const ActionTodo = ({todoList}) => {
+    const dispatch = useDispatch();
+  
+    const remainingTodoList  = useSelector(remainingTask);
+
     function markAllComplete(){
-      const updatedTodoList = todoList.map(element =>({...element, status : "Completed"})); 
-      setTodoList(updatedTodoList);
+      dispatch(markedAllComplete());
     }
     function clearAllTask(){
-      const updatedTodoList = todoList.map(element =>({...element, status : "Active"})); 
-      setTodoList(updatedTodoList);
+      dispatch(clearAllCompletedTask());
     }
     return (
       <div className="flex justify-between items-start p-6 border-t border-gray-300 bg-white shadow-sm">

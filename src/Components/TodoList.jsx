@@ -1,5 +1,5 @@
 import tick from "./../service/tick correct.png"
-const TodoList = ({deleteTask,handleColor,todoList, handleIsChecked}) => {
+const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
     return ( <div className="space-y-4 overflow-y-auto min-h-[30vh] mb-[80px]">
         {todoList.map((element) => (
             <div
@@ -8,10 +8,10 @@ const TodoList = ({deleteTask,handleColor,todoList, handleIsChecked}) => {
             >
             <div className="flex items-center gap-2">
                 {element.status === "Completed" ? <img src={tick} className="w-6 h-6 object-cover" 
-                onClick={() =>handleIsChecked(element.status, element.id)} />:<div className="w-6 h-6 border border-gray-400 rounded-full bg-white"
-                onClick={() =>handleIsChecked(element.status, element.id)}></div>}
+                onClick={() =>handleIsChecked(element.id)} />:<div className="w-6 h-6 border border-gray-400 rounded-full bg-white"
+                onClick={() =>handleIsChecked(element.id)}></div>}
                 
-                <span className="text-lg font-medium text-gray-700">{element.task}</span>
+                <span className="text-lg font-medium text-gray-700">{element.todo}</span>
             </div>
             <div className="flex items-center gap-4">
                 <select 
@@ -25,7 +25,7 @@ const TodoList = ({deleteTask,handleColor,todoList, handleIsChecked}) => {
                 </select>
                 <button
                 className="text-red-500 font-extrabold hover:text-red-700"
-                onClick={(e) => deleteTask(element.id)}
+                onClick={(e) => handleDelete(element.id)}
                 >
                 X
                 </button>
