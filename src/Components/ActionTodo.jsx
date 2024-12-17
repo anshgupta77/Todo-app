@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { markedAllComplete, clearAllCompletedTask  } from "../slices/TodoListSlice";
-import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter} from "../slices/filterSlice";
+import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor} from "../slices/filterSlice";
 import { remainingTask } from "../slices/TodoListSlice";
 const ActionTodo = ({todoList}) => {
     const dispatch = useDispatch();
@@ -8,6 +8,7 @@ const ActionTodo = ({todoList}) => {
   
     const remainingTodoList  = useSelector(remainingTask);
     const allRecentColor = useSelector(allSelectedColor);
+    const allColorList = allColor;
     console.log("All Recent Color: ", allRecentColor);
     function markAllComplete(){
       dispatch(markedAllComplete());
@@ -100,26 +101,14 @@ const ActionTodo = ({todoList}) => {
         <div>
           <div className="font-semibold mb-2">Filter by Color</div>
           <div className="flex flex-col gap-1">
-            <label className="flex items-center gap-2" onClick={() =>handleTicked("green")}>
-              <input type="checkbox" name="color" value="green" checked={allRecentColor.includes("green")}/>
-              <span className="text-green-600 font-medium">Green</span>
-            </label>
-            <label className="flex items-center gap-2" onClick={() =>handleTicked("blue")}>
-              <input type="checkbox" name="color" value="blue" checked={allRecentColor.includes("blue")}/>
-              <span className="text-blue-600 font-medium">Blue</span>
-            </label>
-            <label className="flex items-center gap-2"  onClick={() =>handleTicked("orange")}>
-              <input type="checkbox" name="color" value="orange" checked={allRecentColor.includes("orange")}/>
-              <span className="text-orange-500 font-medium">Orange</span>
-            </label>
-            <label className="flex items-center gap-2"  onClick={() =>handleTicked("purple")}>
-              <input type="checkbox" name="color" value="purple" checked={allRecentColor.includes("purple")}/>
-              <span className="text-purple-600 font-medium">Purple</span>
-            </label>
-            <label className="flex items-center gap-2" onClick={() =>handleTicked("red")}>
-              <input type="checkbox" name="color" value="red" checked={allRecentColor.includes("red")}/>
-              <span className="text-red-600 font-medium">Red</span>
-            </label>
+              {allColorList.map(Color =>(
+                <>
+                  <label className="flex items-center gap-2" onClick={() =>handleTicked(Color)}>
+                    <input type="checkbox" name="color" value={Color} checked={allRecentColor.includes(Color)}/>
+                    <span className={`text-${Color}-600 font-medium`}>{Color}</span>
+                  </label>
+                </>
+              ))}  
           </div>
         </div>
       </div>
