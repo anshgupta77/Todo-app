@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { markedAllComplete, clearAllCompletedTask  } from "../slices/TodoListSlice";
-import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor} from "../slices/filterSlice";
+import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor, allStatus} from "../slices/filterSlice";
 import { remainingTask } from "../slices/TodoListSlice";
 const ActionTodo = ({todoList}) => {
     const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const ActionTodo = ({todoList}) => {
     const remainingTodoList  = useSelector(remainingTask);
     const allRecentColor = useSelector(allSelectedColor);
     const allColorList = allColor;
+    const allStatusList = allStatus;
     console.log("All Recent Color: ", allRecentColor);
     function markAllComplete(){
       dispatch(markedAllComplete());
@@ -42,59 +43,29 @@ const ActionTodo = ({todoList}) => {
           <div className="font-semibold mb-2">Remaining Todos</div>
           <div>{remainingTodoList} item left</div>
         </div>
-  
-   
         <div>
           <div className="font-semibold mb-2">Filter by Status</div>
           <div className="flex flex-col gap-1">
-            <div className="flex justify-between ">
-            <label className="flex items-center gap-2">
-                All
-              </label>
-              <input
-                type="radio"
-                name="status"
-                value="All"
-                checked={statusFilter === "All"}
-                onChange={(e) =>{
-                  const selectStatus = e.target.value;
-                  dispatch(setStatusFilter({selectStatus}))
-                }}
-                className="accent-blue-500"
-              />
-            </div>
-            <div className="flex justify-between ">
-            <label className="flex items-center gap-2">
-                Active
-              </label>
-              <input
-                type="radio"
-                name="status"
-                value="Active"
-                className="accent-blue-500"
-                checked={statusFilter === "Active"}
-                onChange={(e) =>{
-                  const selectStatus = e.target.value;
-                  dispatch(setStatusFilter({selectStatus}))
-                }}
-              />
-            </div>
-            <div className="flex justify-between ">
-            <label className="flex items-center gap-2">
-                Completed
-              </label>
-              <input
-                type="radio"
-                name="status"
-                value="Completed"
-                className="accent-blue-500"
-                checked={statusFilter === "Completed"}
-                onChange={(e) =>{
-                  const selectStatus = e.target.value;
-                  dispatch(setStatusFilter({selectStatus}))
-                }}
-              />
-            </div>
+            {allStatusList.map(Status => (
+              <>
+                <div className="flex justify-between ">
+                <label className="flex items-center gap-2">
+                    {Status}
+                  </label>
+                  <input
+                    type="radio"
+                    name="status"
+                    value={Status}
+                    checked={statusFilter === Status}
+                    onChange={(e) =>{
+                      const selectStatus = e.target.value;
+                      dispatch(setStatusFilter({selectStatus}))
+                    }}
+                    className="accent-blue-500"
+                  />
+                </div>
+              </>
+            ))}
           </div>
         </div>
   
@@ -102,12 +73,12 @@ const ActionTodo = ({todoList}) => {
           <div className="font-semibold mb-2">Filter by Color</div>
           <div className="flex flex-col gap-1">
               {allColorList.map(Color =>(
-                <>
-                  <label className="flex items-center gap-2" onClick={() =>handleTicked(Color)}>
+                <div onClick={() =>handleTicked(Color)}>
+                  <label className="flex items-center gap-2" >
                     <input type="checkbox" name="color" value={Color} checked={allRecentColor.includes(Color)}/>
                     <span className={`text-${Color}-600 font-medium`}>{Color}</span>
                   </label>
-                </>
+                </div>
               ))}  
           </div>
         </div>

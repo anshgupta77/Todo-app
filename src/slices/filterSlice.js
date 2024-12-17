@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const filterSlice = createSlice({
     name: "filterTodo",
     initialState:{
-        selectedStatus: "",
+        selectedStatus: "All",
         selectedColor: [],
     },
     reducers:{
@@ -31,13 +31,14 @@ export default filterSlice.reducer;
 export const {setStatusFilter, setColorFilter, clearColorFilter} = filterSlice.actions;
 export const RecentStatusFilter = (state) => state.filter.selectedStatus;
 export const getFilterTodoList = (selectStatus) =>(state) =>{
-    if(selectStatus === "" || selectStatus === "All"){
+    if(selectStatus === "All"){
         return state.todos.todoList;
     }
     return state.todos.todoList.filter(element => element.status === selectStatus);  
 }
 
 export const allColor = ["purple", "green", "red", "blue", "orange"];
+export const allStatus = ["All", "Active", "Completed"];
 export const getColorFilterTodoList = (filterTodoList) => (state) =>{
     
 
