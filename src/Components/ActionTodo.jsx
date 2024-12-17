@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { markedAllComplete, clearAllCompletedTask } from "../slices/TodoListSlice";
+import { markedAllComplete, clearAllCompletedTask  } from "../slices/TodoListSlice";
+import { RecentStatusFilter, setStatusFilter } from "../slices/filterSlice";
 import { remainingTask } from "../slices/TodoListSlice";
 const ActionTodo = ({todoList}) => {
     const dispatch = useDispatch();
+    const statusFilter = useSelector(RecentStatusFilter);
   
     const remainingTodoList  = useSelector(remainingTask);
 
@@ -41,7 +43,12 @@ const ActionTodo = ({todoList}) => {
               <input
                 type="radio"
                 name="status"
-                value=""
+                value="All"
+                checked={statusFilter === "All"}
+                onChange={(e) =>{
+                  const selectStatus = e.target.value;
+                  dispatch(setStatusFilter({selectStatus}))
+                }}
                 className="accent-blue-500"
               />
             </div>
@@ -52,8 +59,13 @@ const ActionTodo = ({todoList}) => {
               <input
                 type="radio"
                 name="status"
-                value="active"
+                value="Active"
                 className="accent-blue-500"
+                checked={statusFilter === "Active"}
+                onChange={(e) =>{
+                  const selectStatus = e.target.value;
+                  dispatch(setStatusFilter({selectStatus}))
+                }}
               />
             </div>
             <div className="flex justify-between ">
@@ -63,8 +75,13 @@ const ActionTodo = ({todoList}) => {
               <input
                 type="radio"
                 name="status"
-                value="completed"
+                value="Completed"
                 className="accent-blue-500"
+                checked={statusFilter === "Completed"}
+                onChange={(e) =>{
+                  const selectStatus = e.target.value;
+                  dispatch(setStatusFilter({selectStatus}))
+                }}
               />
             </div>
           </div>

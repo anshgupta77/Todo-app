@@ -1,5 +1,26 @@
 import tick from "./../service/tick correct.png"
+import { useSelector } from "react-redux";
+import { RecentStatusFilter } from "../slices/filterSlice";
 const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
+    console.log("From the todoList", todoList);
+
+    const statusFilter = useSelector(RecentStatusFilter);
+
+    if(todoList.length === 0 && statusFilter === "" && statusFilter === ""){
+        return (
+            <div className="text-2xl space-y-4 overflow-y-auto min-h-[30vh] mb-[80px] text-blue-700">
+            No data is Available Currently!!!
+            </div>
+        )
+    }
+    if(todoList.length === 0 ){
+        return (
+            <div className="text-2xl space-y-4 overflow-y-auto min-h-[30vh] mb-[80px] text-blue-700">
+            No {statusFilter} task.
+            </div>
+        )
+    }
+
     return ( <div className="space-y-4 overflow-y-auto min-h-[30vh] mb-[80px]">
         {todoList.map((element) => (
             <div
