@@ -6,7 +6,7 @@ const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
 
     const statusFilter = useSelector(RecentStatusFilter);
 
-    if(todoList.length === 0 && statusFilter === "" && statusFilter === ""){
+    if(todoList.length === 0 && (statusFilter === "" || statusFilter === "All")){
         return (
             <div className="text-2xl space-y-4 overflow-y-auto min-h-[30vh] mb-[80px] text-blue-700">
             No data is Available Currently!!!
@@ -43,6 +43,7 @@ const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
                 <option value="blue" className="text-blue-600 font-extrabold">Blue</option>
                 <option value="red" className="text-red-600 font-extrabold">Red</option>
                 <option value="green" className="text-green-600 font-extrabold">Green</option>
+                <option value="orange" className="text-orange-600 font-extrabold">Orange</option>
                 </select>
                 <button
                 className="text-red-500 font-extrabold hover:text-red-700"

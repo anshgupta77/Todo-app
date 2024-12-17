@@ -2,7 +2,7 @@
 import TodoList from "./TodoList";
 import { useDispatch, useSelector } from "react-redux";
 import { updateColor, updateStatus, deleteTask } from "../slices/TodoListSlice";
-import { RecentStatusFilter , getFilterTodoList} from "../slices/filterSlice";
+import { RecentStatusFilter , getFilterTodoList,getColorFilterTodoList} from "../slices/filterSlice";
 const VeiwTodo = ({ setTodoList,todoList}) => {
     console.log("Todo List :" , todoList)
     const dispatch = useDispatch();
@@ -20,9 +20,11 @@ const VeiwTodo = ({ setTodoList,todoList}) => {
     }
     const filterTodoList = useSelector(getFilterTodoList(statusFilter));
 
+    const colorFilterTodoList = useSelector(getColorFilterTodoList(filterTodoList));
+
     return ( 
         <TodoList 
-        todoList={filterTodoList}
+        todoList={colorFilterTodoList}
         handleIsChecked={handleIsChecked}
         handleColor={handleColor}
         handleDelete={handleDelete}></TodoList>
