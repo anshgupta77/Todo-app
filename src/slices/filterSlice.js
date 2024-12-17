@@ -39,6 +39,13 @@ export const getFilterTodoList = (selectStatus) =>(state) =>{
 
 export const allColor = ["purple", "green", "red", "blue", "orange"];
 export const allStatus = ["All", "Active", "Completed"];
+export const colorClass = {
+    red: "text-red-600",
+    blue: "text-blue-600",
+    green: "text-green-600",
+    orange: "text-orange-600",
+    purple: "text-purple-600",
+  };
 export const getColorFilterTodoList = (filterTodoList) => (state) =>{
     
 

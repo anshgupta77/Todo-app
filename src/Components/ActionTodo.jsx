@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { markedAllComplete, clearAllCompletedTask  } from "../slices/TodoListSlice";
-import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor, allStatus} from "../slices/filterSlice";
+import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor, allStatus, colorClass} from "../slices/filterSlice";
 import { remainingTask } from "../slices/TodoListSlice";
 const ActionTodo = ({todoList}) => {
     const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const ActionTodo = ({todoList}) => {
     const remainingTodoList  = useSelector(remainingTask);
     const allRecentColor = useSelector(allSelectedColor);
     const allColorList = allColor;
+    const colorClassMap = colorClass;
     const allStatusList = allStatus;
     console.log("All Recent Color: ", allRecentColor);
     function markAllComplete(){
@@ -30,7 +31,7 @@ const ActionTodo = ({todoList}) => {
       <div className="flex justify-between items-start p-6 border-t border-gray-300 bg-white shadow-sm">
       
         <div className="flex flex-col items-start gap-2">
-          <div className="font-semibold mb-2">Actions</div>
+          <div className="font-semibold mb-2 text-amber-900 text-lg">Actions</div>
           <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={markAllComplete}>
             Mark All Completed
           </button>
@@ -40,11 +41,11 @@ const ActionTodo = ({todoList}) => {
         </div>
   
         <div className="text-gray-600">
-          <div className="font-semibold mb-2">Remaining Todos</div>
+          <div className="font-semibold mb-2 text-amber-900 text-lg">Remaining Todos</div>
           <div>{remainingTodoList} item left</div>
         </div>
         <div>
-          <div className="font-semibold mb-2">Filter by Status</div>
+          <div className="font-semibold mb-2 text-amber-900 text-lg">Filter by Status</div>
           <div className="flex flex-col gap-1">
             {allStatusList.map(Status => (
               <>
@@ -70,13 +71,13 @@ const ActionTodo = ({todoList}) => {
         </div>
   
         <div>
-          <div className="font-semibold mb-2">Filter by Color</div>
+          <div className="font-semibold mb-2 text-amber-900 text-lg">Filter by Color</div>
           <div className="flex flex-col gap-1">
               {allColorList.map(Color =>(
                 <div onClick={() =>handleTicked(Color)}>
                   <label className="flex items-center gap-2" >
                     <input type="checkbox" name="color" value={Color} checked={allRecentColor.includes(Color)}/>
-                    <span className={`text-${Color}-600 font-medium`}>{Color}</span>
+                    <span className={`${colorClassMap[Color]} font-medium`}>{Color}</span>
                   </label>
                 </div>
               ))}  

@@ -1,11 +1,12 @@
 import tick from "./../service/tick correct.png"
 import { useSelector } from "react-redux";
-import { RecentStatusFilter, allColor } from "../slices/filterSlice";
+import { RecentStatusFilter, allColor, colorClass } from "../slices/filterSlice";
 const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
     console.log("From the todoList", todoList);
 
     const statusFilter = useSelector(RecentStatusFilter);
     const allColorList = allColor;
+    const colorClassMap = colorClass;
 
     if(todoList.length === 0 && statusFilter === "All"){
         return (
@@ -41,7 +42,7 @@ const TodoList = ({handleDelete,handleColor,todoList, handleIsChecked}) => {
                 onChange={(e) =>handleColor(e,element.id)}>
                 {allColorList.map(Color =>(
                     <>
-                        <option value={Color} className={`text-${Color}-600 font-extrabold`}>{Color}</option>
+                        <option value={Color} className={`${colorClassMap[Color]} font-extrabold`}>{Color}</option>
                     </>
                 ))}
                 </select>
