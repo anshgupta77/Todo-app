@@ -30,11 +30,19 @@ const filterSlice = createSlice({
 export default filterSlice.reducer;
 export const {setStatusFilter, setColorFilter, clearColorFilter} = filterSlice.actions;
 export const RecentStatusFilter = (state) => state.filter.selectedStatus;
-export const getFilterTodoList = (selectStatus) =>(state) =>{
-    if(selectStatus === "All"){
-        return state.todos.todoList;
+
+
+export const selectFilterTodoList = (state) =>{
+    var {selectedStatus, selectedColor} = state.filter;
+    var filterTodoList = state.todos.todoList;
+    if(selectedStatus !== "All"){
+        filterTodoList = filterTodoList.filter(task => task.status === selectedStatus);
     }
-    return state.todos.todoList.filter(element => element.status === selectStatus);  
+    if(selectedColor.length === 0){
+        selectedColor = allColor;
+    }
+    filterTodoList = filterTodoList.filter(task => selectedColor.includes(task.color));
+    return filterTodoList; 
 }
 
 export const allColor = ["purple", "green", "red", "blue", "orange"];
@@ -46,13 +54,5 @@ export const colorClass = {
     orange: "text-orange-600",
     purple: "text-purple-600",
   };
-export const getColorFilterTodoList = (filterTodoList) => (state) =>{
-    
 
-    const selectedColors = state.filter.selectedColor.length > 0 
-        ? state.filter.selectedColor 
-        : allColor;
-
-    return filterTodoList.filter(task => selectedColors.includes(task.color));
-}
 export const allSelectedColor = (state) => state.filter.selectedColor;
