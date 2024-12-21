@@ -1,17 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { markedAllComplete, clearAllCompletedTask  } from "../slices/TodoListSlice";
-import { RecentStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor, allStatus, colorClass} from "../slices/filterSlice";
+import { selectedStatusFilter, setStatusFilter, allSelectedColor , setColorFilter, clearColorFilter, allColor, allStatus, colorClass} from "../slices/filterSlice";
 import { remainingTask } from "../slices/TodoListSlice";
-const ActionTodo = ({todoList}) => {
+const ActionTodo = () => {
     const dispatch = useDispatch();
-    const statusFilter = useSelector(RecentStatusFilter);
-  
+    const statusFilter = useSelector(selectedStatusFilter);
     const remainingTodoList  = useSelector(remainingTask);
     const allRecentColor = useSelector(allSelectedColor);
-    const allColorList = allColor;
-    const colorClassMap = colorClass;
-    const allStatusList = allStatus;
-    console.log("All Recent Color: ", allRecentColor);
     function markAllComplete(){
       dispatch(markedAllComplete());
     }
@@ -47,7 +42,7 @@ const ActionTodo = ({todoList}) => {
         <div>
           <div className="font-semibold mb-2 text-amber-900 text-lg">Filter by Status</div>
           <div className="flex flex-col gap-1">
-            {allStatusList.map(Status => (
+            {allStatus.map(Status => (
               <>
                 <div className="flex justify-between ">
                 <label className="flex items-center gap-2">
@@ -73,11 +68,11 @@ const ActionTodo = ({todoList}) => {
         <div>
           <div className="font-semibold mb-2 text-amber-900 text-lg">Filter by Color</div>
           <div className="flex flex-col gap-1">
-              {allColorList.map(Color =>(
+              {allColor.map(Color =>(
                 <div onClick={() =>handleTicked(Color)}>
                   <label className="flex items-center gap-2" >
                     <input type="checkbox" name="color" value={Color} checked={allRecentColor.includes(Color)}/>
-                    <span className={`${colorClassMap[Color]} font-medium`}>{Color}</span>
+                    <span className={`${colorClass[Color]} font-medium`}>{Color}</span>
                   </label>
                 </div>
               ))}  

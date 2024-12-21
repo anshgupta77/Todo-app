@@ -29,7 +29,7 @@ const filterSlice = createSlice({
 })
 export default filterSlice.reducer;
 export const {setStatusFilter, setColorFilter, clearColorFilter} = filterSlice.actions;
-export const RecentStatusFilter = (state) => state.filter.selectedStatus;
+export const selectedStatusFilter = (state) => state.filter.selectedStatus;
 
 
 export const selectFilterTodoList = (state) =>{

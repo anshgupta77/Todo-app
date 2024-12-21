@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { addTask } from "../slices/TodoListSlice";
-import { useDispatch, useSelector } from "react-redux";
-function generateId(todoList){
-    const result = todoList.reduce((acc, ele) =>{
-        if(ele.id === undefined) return acc;
-        if(ele.id > acc) return ele.id;
-        return acc;
-    },0);
-    return result+1;
-}
-const InputTodo = ({todoList, setTodoList}) => {
-
+import { useDispatch} from "react-redux";
+const InputTodo = () => {
     const [task, setTask] = useState({
         todo: "",
     });
